@@ -18,7 +18,7 @@ export default function AddTodo ({ onAdd }) {
       <input
         type='text'
         value={text}
-        onInput={setText(e.target.value)}
+        onChange={e => setText(e.target.value)}
         placeholder='Enter a new todo...'
       />
       <button type='submit'>Add Todo</button>
