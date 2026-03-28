@@ -17,11 +17,15 @@ export default function App () {
 
     setTodos([...todos, newTodo]);
   }
+
+  function handleDelete (id) {
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
   return (
     <div>
       <h1>My Todo App</h1>
-      <AddTodo onAdd={handleAddTodo} />
-      <TodoList todos={todos} />
+      <AddTodo onAdd={handleAddTodo}  />
+      <TodoList todos={todos} onDelete={handleDelete} />
     </div>
   );
 }
