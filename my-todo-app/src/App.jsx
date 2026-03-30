@@ -13,6 +13,7 @@ export default function App () {
     const newTodo = {
       id: Date.now(),
       text: text,
+      completed: false,
     };
 
     setTodos([...todos, newTodo]);
@@ -21,11 +22,23 @@ export default function App () {
   function handleDelete (id) {
     setTodos(todos.filter(todo => todo.id !== id));
   }
+  function handleToggle (id) {
+    setTodos(
+      todos.map(todo => {
+        if (todo.id === id) {
+          return { ...todo, completed: !todo.completed };
+        } else {
+          return todo;
+        }
+      })
+    );
+  }
+
   return (
     <div>
       <h1>My Todo App</h1>
-      <AddTodo onAdd={handleAddTodo}  />
-      <TodoList todos={todos} onDelete={handleDelete} />
+      <AddTodo onAdd={handleAddTodo} />
+      <TodoList todos={todos} onDelete={handleDelete} onToggle = {handleToggle} />
     </div>
   );
 }
