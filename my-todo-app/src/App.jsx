@@ -4,16 +4,15 @@ import AddTodo from './components/AddTodo';
 
 export default function App () {
   const [todos, setTodos] = useState([
-    { id: 1, text: 'Understand React' },
-    { id: 2, text: 'freeCodeCamp' },
-    { id: 3, text: 'LinkedIn connections' },
+    { id: 1, text: 'Understand React', completed: false, category: 'Work' },
+    { id: 2, text: 'freeCodeCamp', completed: false, category: 'Work' },
+    { id: 3, text: 'LinkedIn connections', completed: false, category: 'Work' },
   ]);
 
   function handleAddTodo (text) {
     const newTodo = {
       id: Date.now(),
       text: text,
-      completed: false,
     };
 
     setTodos([...todos, newTodo]);
@@ -25,11 +24,7 @@ export default function App () {
   function handleToggle (id) {
     setTodos(
       todos.map(todo => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        } else {
-          return todo;
-        }
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo;
       })
     );
   }
@@ -38,7 +33,7 @@ export default function App () {
     <div>
       <h1>My Todo App</h1>
       <AddTodo onAdd={handleAddTodo} />
-      <TodoList todos={todos} onDelete={handleDelete} onToggle = {handleToggle} />
+      <TodoList todos={todos} onDelete={handleDelete} onToggle={handleToggle} />
     </div>
   );
 }
