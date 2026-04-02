@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
 import CategoryFilter from './components/CategoryFilter';
 export default function App () {
-  const [todos, setTodos] = useState([
-    { id: 1, text: 'Understand React', completed: false, category: 'Work' },
-    { id: 2, text: 'freeCodeCamp', completed: false, category: 'Personal' },
-    { id: 3, text: 'LinkedIn connections', completed: false, category: 'Work' },
-  ]);
+  
+  const [todos, setTodos] = useState(() => {
+    const saved = localStorage.getItem('todos');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(todos));
+  }, [todos]);
 
   const [activeCategory, setActiveCategory] = useState('All');
 
