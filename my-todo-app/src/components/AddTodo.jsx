@@ -1,12 +1,23 @@
 import { useState } from 'react';
 
-export default function AddTodo ({ onAdd }) {
+export default function AddTodo ({ onAdd, todos }) {
   const [text, setText] = useState('');
 
   function handleSubmit (e) {
     e.preventDefault();
+    if (text.trim() === '') {
+      alert('Please Enter something!');
+      return;
+    }
 
-    if (text.trim() === '') return;
+    const isDuplicate = todos.some(
+      todo => todo.text.toLowerCase() === text.toLowerCase()
+    );
+    console.log(isDuplicate);
+    if (isDuplicate) {
+      alert('Todo already exists');
+      return;
+    }
 
     onAdd(text);
 

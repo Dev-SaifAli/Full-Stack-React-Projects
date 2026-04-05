@@ -41,10 +41,13 @@ export default function App () {
     );
   }
 
+  // Check duplicate
+
+
   return (
     <div>
       <h1>My Todo App</h1>
-      <AddTodo onAdd={handleAddTodo} />
+      <AddTodo todos={todos} onAdd={handleAddTodo} />
       <CategoryFilter
         activeCategory={activeCategory}
         setActiveCategory={setActiveCategory}
