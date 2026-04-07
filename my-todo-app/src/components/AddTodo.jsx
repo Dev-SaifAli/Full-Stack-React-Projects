@@ -10,14 +10,6 @@ export default function AddTodo ({ onAdd, todos }) {
       return;
     }
 
-    const isDuplicate = todos.some(
-      todo => todo.text.toLowerCase() === text.toLowerCase()
-    );
-    console.log(isDuplicate);
-    if (isDuplicate) {
-      alert('Todo already exists');
-      return;
-    }
 
     onAdd(text);
 

@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import TodoList from './components/TodoList';
 import AddTodo from './components/AddTodo';
 import CategoryFilter from './components/CategoryFilter';
+
 export default function App () {
-  
   const [todos, setTodos] = useState(() => {
     const saved = localStorage.getItem('todos');
     return saved ? JSON.parse(saved) : [];
   });
+  const [todoSet, setTodoSet] = useState(new Set());
 
   useEffect(() => {
     localStorage.setItem('todos', JSON.stringify(todos));
@@ -21,28 +22,35 @@ export default function App () {
       : todos.filter(todo => todo.category === activeCategory);
 
   function handleAddTodo (text) {
+    const normalized = text.toLowerCase();
+
+    if (todoSet.has(normalized)) {
+      alert('Todo already exists');
+      return;
+    }
+
     const newTodo = {
       id: Date.now(),
       text: text,
     };
 
-    setTodos([...todos, newTodo]);
+    setTodos(prev => [...prev, newTodo]);
+    setTodoSet(prev => new Set([...prev, normalized]));
   }
 
   function handleDelete (id) {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(prev => prev.filter(todo => todo.id !== id));
   }
 
   function handleToggle (id) {
-    setTodos(
-      todos.map(todo =>
+    setTodos(prev =>
+      prev.map(todo =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
       )
     );
   }
 
   // Check duplicate
-
 
   return (
     <div>
